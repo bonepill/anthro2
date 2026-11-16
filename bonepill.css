@@ -1,0 +1,38 @@
+body {
+  image-rendering: pixelated;
+  background-color: #4B4A4A;
+  margin: 1vw;
+}
+
+#title {
+  font-size: 18vw;
+  color: white;
+  margin-top: -4vw;
+  margin-left: 2vw;
+  text-shadow: 0 0 1vw black;
+}
+
+#top-grid {
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+  gap: 0px;
+}
+
+#bone {
+  margin: 5px;
+  display: grid;
+  grid-template-columns: 100%;
+  gap: 0px;
+}
+
+#bone img {
+  display: block;
+}
+
+#tape {
+  display: block;
+  height: 2000px;
+  background-image: url("measuring-tape.png");
+  background-repeat: repeat;   /* this is the default */
+  background-size: 100%;  /* optional — omit to use native size */
+}

@@ -40,7 +40,7 @@ var bounds = {
   ymax: Math.max(...mydata.map(p => p[1])),
 }
 
-function xAxis(min, max, targetTicks = 5) {
+function axisValues(min, max, targetTicks = 5) {
   const range = max - min;
   const roughInterval = range / targetTicks;
   const magnitude = Math.pow(10, Math.ceil(Math.log10(roughInterval)) - 1);
@@ -50,26 +50,46 @@ function xAxis(min, max, targetTicks = 5) {
   else if (normalized <= 5) nice = 5;
   else nice = 10;
 
-  let line_style = {
-	width: 2,
-	color: 'black',
-  }
   return {
 	interval: nice * magnitude,
 	min: nice * magnitude * (Math.ceil(min / (nice * magnitude)) - 1),
 	max: nice * magnitude * (Math.floor(max / (nice * magnitude)) + 1),
+	splitNumber: (nice == 2) ? 4 : 5,
+  }
+}
+
+let line_style_x = {
+  width: 2,
+  color: 'black',
+};
+let axis_values_x = axisValues(bounds.xmin, bounds.xmax, 7);
+let axis_values_y = axisValues(bounds.ymin, bounds.ymax, 7);
+
+option = {
+  grid: {
+	top: 0,
+	bottom: 0,
+	left: '8%',
+	right: '8%',
+	show: true,
+	backgroundColor: 'white',
+  },
+  xAxis: {
+	interval: axis_values_x.interval,
+	min: axis_values_x.min,
+	max: axis_values_x.max,
 	axisLine: {
-	  lineStyle: line_style,
+	  lineStyle: line_style_x,
 	},
 	minorTick: {
       show: true,
-	  splitNumber: nice,
+	  splitNumber: axis_values_x.splitNumber,
 	  length: 8,
-	  lineStyle: line_style,
+	  lineStyle: line_style_x,
     },
     axisTick: {
 	  length: 30,
-	  lineStyle: line_style,
+	  lineStyle: line_style_x,
 	},
 	axisLabel: {
 	  showMinLabel: false,
@@ -80,51 +100,24 @@ function xAxis(min, max, targetTicks = 5) {
 	  fontWeight: 'bold',
 	  fontSize: 20,
 	},
-  };
-}
-
-function yAxis(min, max, targetTicks = 5) {
-  const range = max - min;
-  const roughInterval = range / targetTicks;
-  const magnitude = Math.pow(10, Math.ceil(Math.log10(roughInterval)) - 1);
-  const normalized = roughInterval / magnitude;
-  let nice;
-  if (normalized <= 2) nice = 2;
-  else if (normalized <= 5) nice = 5;
-  else nice = 10;
-
-  let line_style = {
-	color: 'white',
-  }
-  return {
-	interval: nice * magnitude,
-	min: nice * magnitude * (Math.ceil(min / (nice * magnitude)) - 1),
-	max: nice * magnitude * (Math.floor(max / (nice * magnitude)) + 1),
-	minorTick: {
-      show: true,
-	  splitNumber: nice,
-	  length: 4,
-	  lineStyle: line_style,
-    },
+  },
+  yAxis: {
+	position: 'right',
+	interval: axis_values_y.interval,
+	min: axis_values_y.min,
+	max: axis_values_y.max,
+	axisLine: {onZero: false},
     axisTick: {
-	  length: 10,
-	  lineStyle: line_style,
+	  length: 4,
+	  lineStyle: {
+		color: 'white',
+	  },
 	},
 	axisLabel: {
-	  align: 'right',
+	  align: 'left',
 	  color: 'white',
-	  margin: 15,
 	},
-  };
-}
-
-option = {
-  grid: {
-	show: true,
-	backgroundColor: 'white',
   },
-  xAxis: xAxis(bounds.xmin, bounds.xmax, 7),
-  yAxis: yAxis(bounds.ymin, bounds.ymax, 7),
   series: [
     {
       symbolSize: 5,
@@ -160,6 +153,9 @@ function updateAxisBackground(chart) {
 }
 
 option && myChart.setOption(option);
+updateAxisBackground(myChart);
+/*
 myChart.on('finished', () => {
   updateAxisBackground(myChart);
 });
+*/

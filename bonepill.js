@@ -96,7 +96,7 @@ option = {
 	  align: 'right',
 	  color: 'black',
 	  margin: 10,
-	  padding: [0, 5],
+	  padding: [0, 3],
 	  fontWeight: 'bold',
 	  fontSize: 20,
 	},

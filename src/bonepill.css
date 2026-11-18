@@ -1,10 +1,12 @@
 html {
-    font-size: 100%;
+  font-size: 100%;
+  overflow-y: scroll;
 }
 
 body {
-  font-size: 100%;
   image-rendering: pixelated;
+  width: 100%;
+  font-size: 100%;
   background-color: #3B3A3A;
   color: white;
   margin: 1vw;
@@ -12,7 +14,7 @@ body {
 
 /* make bg and fg overlap */
 #background, #foreground {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
 }
@@ -111,9 +113,9 @@ body {
 
   #tape {
 	display: block;
-	height: 500rem;
+	height: 150rem;
 	width: 100%;
-	background-image: url("measuring-tape.png");
+	background-image: url("/assets/measuring-tape.png");
 	background-repeat: repeat;
 	background-size: 100%;
   }

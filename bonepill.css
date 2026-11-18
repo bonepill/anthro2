@@ -1,6 +1,6 @@
 body {
   image-rendering: pixelated;
-  background-color: #4B4A4A;
+  background-color: #3B3A3A;
   margin: 1vw;
 }
 
@@ -17,7 +17,7 @@ body {
   width: 100%;
   #centerpage {
 	margin: auto;
-	margin-top: 24vw;
+	margin-top: 22vw;
 	width: min(1000px, 85%);
   }
 }

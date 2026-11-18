@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: '/anthro2/', 
+  base: '/anthro2/',
 });

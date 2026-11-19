@@ -1,18 +1,24 @@
 import pandas as pd
 
 variables = {
-    'height', #cm
-    'weight', #kg
-    'bmi',    #kg/m^2
+    'gender', # 'f' / 'm'
+    'height', # cm
+    'weight', # kg
+    'bmi',    # kg/m^2
 }
 
 def parse_ansur_ii():
-    path_f = "data/ansur-ii/ANSUR_II_FEMALE_Public.csv"
-    path_m = "data/ansur-ii/ANSUR_II_MALE_Public.csv"
+    path_f = "data/raw/ANSUR_II_FEMALE_Public.csv"
+    path_m = "data/raw/ANSUR_II_MALE_Public.csv"
 
     label_map = {
+        'Gender':   'gender',
         'stature':  'height',
         'weightkg': 'weight',
+    }
+    gender_map = {
+        'Female': 'f',
+        'Male':   'm',
     }
 
     data = pd.DataFrame()
@@ -27,9 +33,15 @@ def parse_ansur_ii():
             data = pd.concat([data, df])
             pass
 
-    data *= 0.1
+    # map gender values
+    data['gender'] = data['gender'].map(gender_map)
+
+    # scale numeric columns
+    num_cols = data.select_dtypes(include='number').columns
+    data[num_cols] = data[num_cols] * 0.1
+
     data['bmi'] = 10000 * data['weight'] / (data['height'] * data['height'])
-    data.round(decimals=1).reset_index().to_json("data/ansur-ii/ansur-ii.json", orient='columns')
+    data.round(decimals=1).reset_index().to_json("data/ansur-ii.json", orient='columns')
 
 def main():
     parse_ansur_ii()
